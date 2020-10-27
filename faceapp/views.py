@@ -6,6 +6,8 @@ import face_recognition
 from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
+def home(request):
+    return render(request,'index.html')
 
 def imageviewform(request):
     if request.method=='POST':
@@ -16,7 +18,7 @@ def imageviewform(request):
             # print(form.cleaned_data['image'])
             img=form.cleaned_data['image']
             op=facerecognition(img)
-            return render(request,'faceapp.html',{'op':json.dumps(op)})
+            return render(request,'imagesubmit.html',{'op':json.dumps(op)})
         return render(request,'imagesubmit.html',{'form':form})
     form=UploadImageForm()
     return render(request,'imagesubmit.html',{'form':form})

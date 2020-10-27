@@ -1,8 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-xs-4" >
+            <h3>Upload the image</h3>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+            <a href="{% url 'homepage' %}" ><button class="btn btn-info">Home</button></a>
+        </div>
+        
+        <div id="op" class="col-sm-8 col-xs-8">
+        </div>
+        <div>
+            <script>
+                var images=JSON.parse("{{op|escapejs}}")
+                // console.log(images)
+                for(var i=0; i<images.length; i++) {
+                    var image = new Image();
+                    image.src = 'data:image/png;base64,'+images[i];
+                    var op=document.getElementById('op');
+                    op.appendChild(image)
+                }
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
+        
+                
+                             
+                
+        
+                
+            
+             
+            
+                
+            
+        
 
-<form method="POST" enctype="multipart/form-data">
-    <h3>Select an image </h3>
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Submit</button>
-    
-</form>
+            
+            
+
+                
+            
+            
+            
