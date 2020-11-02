@@ -1,9 +1,8 @@
 from django.urls import path
-from .views import imageviewform,home,message
+from .views import imageviewform,home
 
 urlpatterns=[
     path('',home,name='homepage'),
-    path('msg/',message,name='message'),
     path('image/',imageviewform,name='image'),
     
 ]

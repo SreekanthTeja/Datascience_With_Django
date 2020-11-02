@@ -9,12 +9,6 @@ from .forms import UploadImageForm
 def home(request):
     print(request.GET)
     return render(request,'index.html')
-def message(request):
-    print(request.GET)
-    return render(request,'click.html')
-   
-    
-
 def imageviewform(request):
     if request.method=='POST':
         form=UploadImageForm(request.POST,request.FILES)
