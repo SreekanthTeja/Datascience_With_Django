@@ -1,51 +1,169 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<style>
+    .prv-box {
+        border: 1px solid rgb(126, 32, 32);
+        border-radius: 10px;
+        margin: 10px;
+        height: 150px;
+        width: 150px;   
+    }
+
+    #preview {
+        height: inherit;
+    }
+    img{
+        height: 140px;
+
+    }
+</style>
 <div class="container">
     <div class="row">
-        <div class="col-sm-4 col-xs-4" >
-            <h3>Upload the image</h3>
-            <form method="POST" enctype="multipart/form-data">
+        <div class="col-sm-4 col-xs-4">
+            <!-- <h3>Upload the image</h3> -->
+            <!-- <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form.as_p}}
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
-            <a href="{% url 'homepage' %}" ><button class="btn btn-info">Home</button></a>
-        </div>
-        
-        <div id="op" class="col-sm-8 col-xs-8">
-        </div>
-        <div>
-            <script>
-                var images=JSON.parse("{{op|escapejs}}")
-                // console.log(images)
-                for(var i=0; i<images.length; i++) {
-                    var image = new Image();
-                    image.src = 'data:image/png;base64,'+images[i];
-                    var op=document.getElementById('op');
-                    op.appendChild(image)
-                }
-            </script>
+            <button id="clickme" class="btn btn-info">Click Me</button> -->
+
+            <div class="left">
+                <h2>Preview</h2>
+                <div class="prv-box">
+                    <video id="preview" autoplay muted></video>
+                </div>
+                <button id="startButton" class="btn btn-success">
+                    Start
+                </button>
+                <button id="stopButton" class="btn btn-danger">
+                    Stop
+                </button>
+
+                <button id="snap" class="btn btn-danger">
+                    Snapshot
+                </button>
+            </div>
+
+
+            <div id="op" class="col-sm-8 col-xs-8" >
+                <canvas style="border:solid 1px #ddd;background-color:white;" id="canvas" width="475" height="475"></canvas>
+            </div>
         </div>
     </div>
-</div>
+
+<script>
+    const roomName = 'myroom'
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+    console.log(chatSocket)
+
+    chatSocket.onmessage = function (e) {
+        const images = JSON.parse(e.data).message;
+        $('#op').empty()
+        for (var i = 0; i < images.length; i++) {
+            var image = new Image();
+            image.src = 'data:image/jpg;base64,' + images[i];
+            var op = document.getElementById('op');
+            op.appendChild(image)
+        }
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+</script>
+<script>
+    let preview = document.getElementById("preview");
+    let startButton = document.getElementById("startButton");
+    let stopButton = document.getElementById("stopButton");
+
+    let snap = document.getElementById("snap");
+
+
+
+    var canvas = document.getElementById('canvas');  
+                var context = canvas.getContext('2d');  
+        
+
+    let recordingTimeMS = 1000;
+    
+    function log(msg) {
+        logElement.innerHTML += msg + "\n";
+    }
+    function wait(delayInMS) {
+        return new Promise(resolve => setTimeout(resolve, delayInMS));
+    }
+    
+    
+    function startRecording(stream, lengthInMS) {
+        let recorder = new MediaRecorder(stream);
+        let data = [];
+
+        recorder.ondataavailable = event => data.push(event.data);
+        recorder.start();
+        // log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
+
+        let stopped = new Promise((resolve, reject) => {
+            recorder.onstop = resolve;
+            recorder.onerror = event => reject(event.name);
+        });
+
+        let recorded = wait(lengthInMS).then(
+            () => recorder.state == "recording" && recorder.stop()
+        );
+
+
+        return Promise.all([
+            stopped,
+            recorded
+        ])
+            .then(() => data);
+    }
+    function stop(stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+    startButton.addEventListener("click", function () {
+        navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+        }).then(stream => {
+            preview.srcObject = stream;
+            // downloadButton.href = stream;
+            preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+            return new Promise(resolve => preview.onplaying = resolve);
+        }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+            .then(recordedChunks => {
+            })
+            // .catch(log);
+    }, false); 
+    
+    stopButton.addEventListener("click", function () {
+        stop(preview.srcObject);
+    }, false);
+
+    snap.addEventListener("click", function () {
+        // Capture the image into canvas from Webcam streaming Video element  
+        context.drawImage(preview, 0, 0);
+        // $(cont).getCanvasImage();
+        const base64Canvas = canvas.toDataURL("image/jpeg");
+        // console.log(base64Canvas)
+        chatSocket.send(JSON.stringify({
+            'message': base64Canvas
+        }));
+    });
+
+
+</script>
 {% endblock %}
-        
-                
-                             
-                
-        
-                
-            
-             
-            
-                
-            
-        
 
-            
-            
 
-                
-            
-            
-            
+
+
