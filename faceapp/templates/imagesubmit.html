@@ -56,19 +56,20 @@
 <script>
     const roomName = 'myroom'
     const loc=location.protocol
+    
     console.log(loc)
     
-    if (loc=='https'){
+    if (loc){
         
-        var myprotocol='WSS://'
-
-    }else{
         var myprotocol='ws://'
+        
+    }else{
+        var myprotocol='WSS://'
 
     }
     
     
-    console.log(myprotocol)
+    // console.log(myprotocol)
     const chatSocket = new WebSocket(
 
         myprotocol
