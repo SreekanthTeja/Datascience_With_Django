@@ -55,18 +55,14 @@
 
 <script>
     const roomName = 'myroom'
-    const loc=location.protocol
-    
-    console.log(loc)
-    
-    if (loc){
-        
-        var myprotocol='ws://'
-        
+    var loc=location.protocol
+    var myprotocol;
+    if (loc='http:'){
+        myprotocol='ws://'
     }else{
-        var myprotocol='WSS://'
-
+        myprotocol='wss://'
     }
+    
     
     
     // console.log(myprotocol)
