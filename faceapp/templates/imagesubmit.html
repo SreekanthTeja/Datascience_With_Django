@@ -57,15 +57,16 @@
     const roomName = 'myroom'
     var loc=location.protocol
     var myprotocol;
+    console.log(loc)
     if (loc='http:'){
         myprotocol='ws://'
     }else{
-        myprotocol='wss://'
+        myprotocol='WSS://'
     }
     
     
     
-    // console.log(myprotocol)
+    console.log(myprotocol)
     const chatSocket = new WebSocket(
 
         myprotocol
