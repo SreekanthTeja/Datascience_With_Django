@@ -61,7 +61,7 @@
     if (loc=='http:'){
         myprotocol='ws://'
     }else{
-        myprotocol='WSS://'
+        myprotocol='wss://'
     }
     
     
@@ -70,7 +70,7 @@
     const chatSocket = new WebSocket(
         myprotocol
         + window.location.host
-        + '/WSS/chat/'
+        + '/ws/chat/'
         + roomName
         + '/'
     );
