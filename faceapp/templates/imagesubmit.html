@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %}Face Crop{% endblock%}
 {% block content %}
 
 <style>
@@ -55,14 +56,29 @@
 
 <script>
     const roomName = 'myroom'
+    var loc=location.protocol
+    var myprotocol;
+    console.log(loc)
+    if (loc=='http:'){
+        myprotocol='ws://'
+    }else{
+        myprotocol='wss://'
+    }
+    
+    
 
+    
+    
+    
+    // console.log()
     const chatSocket = new WebSocket(
-        'ws://'
+        myprotocol
         + window.location.host
         + '/ws/chat/'
         + roomName
         + '/'
     );
+    
     console.log(chatSocket)
 
     chatSocket.onmessage = function (e) {
