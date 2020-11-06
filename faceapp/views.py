@@ -7,7 +7,7 @@ from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
 def home(request):
-    # print(request.GET)
+    print(request.GET)
     return render(request,'index.html')
 def imageviewform(request):
     if request.method=='POST':
