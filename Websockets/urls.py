@@ -6,4 +6,5 @@ urlpatterns = [
     
     path('chat/',include('chat.urls')),
     path('',include('faceapp.urls')),
+    path('',include('people_face.urls')),
 ]

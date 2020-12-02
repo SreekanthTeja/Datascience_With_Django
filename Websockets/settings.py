@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'channels',
     'chat',
     'faceapp',
+    'people_face',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Speech To Text{% endblock%}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <!-- <button id="start" class="btn btn-success" >Record</button>
+    <button id="stop" class="btn btn-danger" >Stop</button>
+    -->
+   <p>
+        <button class="btn btn-success" onclick="runSpeechRecognition()">Speak On</button>
+        
+        <span id="action"></span>
+    </p>
+    <div id="output" class="hide"></div>
+    <script>
+    function runSpeechRecognition() {
+    // get output div reference
+    var output = document.getElementById("output");
+    // get action element reference
+    var action = document.getElementById("action");
+    // new speech recognition object
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+
+    // This runs when the speech recognition service starts
+    recognition.onstart = function() {
+        action.innerHTML = "<small>listening, please speak...</small>";
+    };
+    
+    recognition.onspeechend = function() {
+        action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+        recognition.stop();
+    }
+  
+    // This runs when the speech recognition service returns result
+    recognition.onresult = function(event) {
+        var transcript = event.results[0][0].transcript;
+        var confidence = event.results[0][0].confidence;
+        output.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence*100+"%";
+        output.classList.remove("hide");
+    };
+  
+     // start recognition
+     recognition.start();
+}
+
+			
+		
+    </script> 
+    
+   <!-- <script>
+        const roomName = 'myroom'
+        var loc=location.protocol
+        var myprotocol;
+        console.log(loc)
+        if (loc=='http:'){
+            myprotocol='ws://'
+        }else{
+            myprotocol='wss://'
+        }
+        const chatSocket = new WebSocket(
+            myprotocol
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
+        chatSocket.binaryType = 'blob';
+        
+        console.log(chatSocket)
+    
+        // chatSocket.onmessage = (message: audioBlob) => {
+        //     console.log(JSON.parse(message['data']));
+        // }
+    
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+    
+        const recordAudio = () => {
+            return new Promise(resolve => {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    var mediaRecorder = new MediaRecorder(stream);
+                    // mediaRecorder.mimeType='audio/wav';
+                    const audioChunks = [];
+
+                    mediaRecorder.addEventListener("dataavailable", event => {
+                        audioChunks.push(event.data);
+                        
+                    });
+
+        const start = () => {
+          mediaRecorder.start();
+        };
+        const stop = () => {
+            return new Promise(resolve => {
+                mediaRecorder.addEventListener("stop", () => { 
+                const audioBlob = new Blob(audioChunks, {type: "audio/WebM"})
+                chatSocket.send(audioBlob)
+                
+            //   const audioUrl = URL.createObjectURL(audioBlob);
+            //   const audio = new Audio(audioUrl);
+            //   const play = () => {
+            //     audio.play();
+            //   };
+
+            //   resolve({ audioBlob, audioUrl, play });
+            });
+
+            mediaRecorder.stop();
+          });
+        };
+
+        resolve({ start, stop });
+      });
+  });
+};
+
+var recorder;
+document.getElementById('start').addEventListener('click', function() {
+    (async () => {
+            recorder = await recordAudio();
+            recorder.start();
+    })();
+})
+document.getElementById('stop').addEventListener('click', function() {
+    (async () => {
+        const audio = await recorder.stop();
+        audio.play();
+    })();
+})
+
+
+    </script> -->
+</body>
+</html>
+{% endblock %}
