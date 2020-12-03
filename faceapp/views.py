@@ -7,9 +7,9 @@ from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
 #speech modules
-import cv2
+# import cv2
 
-import speech_recognition as sr
+
 
 def home(request):
     print(request.GET)
@@ -48,58 +48,4 @@ def facerecognition(img):
 
 #speech function
 def speechUI(request):
-    
-    
     return render(request,'speech.html')
-
-# def speech_to_text(audio):
-
-#     r=sr.Recognizer()
-#     with sr.Microphone() as audio:
-#         r.adjust_for_ambient_noise(audio) 
-#         print("Say Something")
-#         audio=r.listen(audio)
-#         print("Done")
-        
-#     try:
-#         text=r.recognize_google(audio)
-#         print("You said: {}".format(text))
-#     except:
-
-#         print(" Sorry couldnt recognize")
-#     return text
-
-        
-        
-    
-
-        
-
-
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-
-    
-
-
