@@ -6,10 +6,7 @@ import face_recognition
 from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
-#speech modules
-
-
-
+#speech module
 
 def home(request):
     # print(request.GET)
