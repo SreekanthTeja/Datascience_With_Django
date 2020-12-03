@@ -6,13 +6,17 @@ import face_recognition
 from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
+<<<<<<< HEAD
 #speech modules
 # import cv2
 
 
 
+=======
+# import speech_recognition as sr
+>>>>>>> 30085e2b5af3ffa5df43ac7c09fd5d9a0e9c5d4c
 def home(request):
-    print(request.GET)
+    # print(request.GET)
     return render(request,'index.html')
 def imageviewform(request):
     if request.method=='POST':
