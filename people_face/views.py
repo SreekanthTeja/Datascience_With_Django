@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .forms import ImageForm
-import cv2
 import numpy as np
 from PIL import Image
 import face_recognition
