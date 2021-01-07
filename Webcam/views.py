@@ -6,15 +6,18 @@ import face_recognition
 from django.http import HttpResponse
 import json
 from .forms import UploadImageForm
+from django.contrib.auth.decorators import login_required
+
 #speech module
 
 def home(request):
     # print(request.GET)
     return render(request,'index.html')
+@login_required(login_url='/accounts/signin/')
 def imageviewform(request):
     if request.method=='POST':
         form=UploadImageForm(request.POST,request.FILES)
-        print(request.POST)
+        # print(request.POST)
         if form.is_valid():
             print('This is valid!')
             # print(form.cleaned_data['image'])

@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'channels',
     'chat',
-    'faceapp',
+    'Webcam',
     'people_face',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[STATIC_DIRS,]
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

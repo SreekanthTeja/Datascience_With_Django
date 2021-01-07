@@ -13,6 +13,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        # print(text_data_json)
         b64str = text_data_json['message']
         
         b64str=b64str.strip('data:image/jpeg;base64')
