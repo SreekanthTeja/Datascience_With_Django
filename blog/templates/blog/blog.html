@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block title %}TRIPS{% endblock%}
+{% block content %}
+
+
+<style>
+    img{
+        width: 60%;
+        height: auto;
+        border: 1px solid rgb(17, 0, 0);
+    }
+</style>
+<div class="row">
+    <div class="col-md-4">
+
+        <a href="{% url 'post_new' %}"><h3>Create Trip</h3></a>
+    </div>
+
+</div>
+
+
+<div class="row">
+    
+    {% for trip in DreamTrip %}
+        <div class="col-md-4">
+            <div class="card mb-2">
+                <img class="card-img-top" src="{{trip.pictures.url}}"  >
+                <div class="card-body">
+                    <h5 class="card-title"><span>Trip: </span>{{ trip.city_name }}</h5>
+                    <p class="card-text"><span>Budget: </span>{{ trip.budget }}</p>
+                    <a href="{% url 'details' trip.pk %}"
+                        class="btn btn-primary">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

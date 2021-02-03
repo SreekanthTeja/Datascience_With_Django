@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+{% load static %}
+{% block title %}Trip Details{% endblock%}
+{% block content %}
+<h1>Blogs</h1>
+
+
+
+{% for trip in DreamTrip %}
+
+<div class="row">
+    
+    
+    <div class="col-md-4">
+        <h3>{{trip.visitor}}</h3>
+        <p><span></span>{{trip.city_name}}</p>
+        <p><span></span>{{trip.journey_type}}</p>
+        <p>{{trip.story}}</p>
+        <p>{{trip.budget}}</p>
+        <!-- <button type="button" class="btn btn-outline-primary">Update<a href="{% url 'post_edit' trip.pk %}"></a></button>&nbsp;<span><button type="button" class="btn btn-outline-danger">Delete<a href="{% url 'post_delete' trip.pk %}"></a></button></span> -->
+        <a href="{% url 'post_edit' trip.pk %}"><button type="button" class="btn btn-outline-primary">Update</button></a>&nbsp;<a href="{% url 'post_delete' trip.pk %}"><button type="button" class="btn btn-outline-primary">Delete</button></a>
+    </div>
+    <div class="col-md-8" >
+        <img src="{{ trip.pictures.url }}"  height="100%" width="60%">
+    </div>
+
+</div>
+
+
+{% endfor %}
+{% endblock %}

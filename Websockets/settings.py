@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_DIRS=os.path.join(BASE_DIR,'static')
+# STATIC_DIRS=os.path.join(BASE_DIR,'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'chat',
     'faceapp',
     'people_face',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -96,6 +97,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -131,7 +133,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+# Static file handling
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[STATIC_DIRS,]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"), 
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', )
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
